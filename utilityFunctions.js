@@ -11,7 +11,9 @@
  * **warning** 
  * 
  * This function iterates through an array of objects and aggregates a chosen field from the objects
- * @param {Array} arr Array containing 
+ * @param {Array} arr Array containing obj values
+ * @param {String} uniqField String describing the field in the object to check for uniqueness
+ * @param {String} aggrField String describing the field containing aggregation values
  */
 function _uniqByAggregate(arr, uniqField, aggrField) {
     for (let i = 0, j = 1; i < arr.length - 1; ++j, ((!(j < arr.length)) ? (++i, j = i + 1) : null))
@@ -26,6 +28,11 @@ function _uniqByAggregate(arr, uniqField, aggrField) {
  * **warning** 
  * 
  * This function iterates through an array of objects and aggregates a chosen field from the objects
+ * @param {Array} arr Array containing obj values
+ * @param {String} uniqField String describing the field in the object to check for uniqueness
+ * @param {String} aggrField String describing the field containing aggregation values
+ * @param {Array} res Result array, this is used to make the algorithm non mutating, you can also seed your own result array into the 
+ *                      algorithm if it suits your application This allows you to seed a prefilled array
  */
 function uniqByAggregate(arr, uniqField, aggrField, res = arr.splice()) {
     for (let i = 0, j = 1; i < res.length - 1; ++j, ((!(j < res.length)) ? (++i, j = i + 1) : null))
