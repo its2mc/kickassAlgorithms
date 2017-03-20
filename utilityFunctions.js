@@ -76,7 +76,7 @@ function uniqBy(arr, uniqField, res = arr.splice()) {
 /**
  * Cannot claim credit for this one,... yet.. :D 
  * found a kick ass way to safely get nested properties from an object..
- * @param {Array} props Array containing obj values
+ * @param {Array} props Array containing obj properties
  * @param {Object} obj String describing the field in the object to check for uniqueness
  * @return {any} The value of the property accessed is returned
  */
