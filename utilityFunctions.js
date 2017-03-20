@@ -80,7 +80,8 @@ function uniqBy(arr, uniqField, res = arr.splice()) {
  * @param {Object} obj String describing the field in the object to check for uniqueness
  * @return {any} The value of the property accessed is returned
  */
-function getVal(props, obj) {
+function safeGet(props, obj) {
     return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (obj[prop]) ? obj[prop] : null, obj)) : null;
 }
-let getVal = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (obj[prop]) ? obj[prop] : null, obj)) : null;
+//ES6 Goodness
+let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (obj[prop]) ? obj[prop] : null, obj)) : null;
