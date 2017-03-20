@@ -85,3 +85,18 @@ function safeGet(props, obj) {
 }
 //ES6 Goodness
 let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (obj[prop]) ? obj[prop] : null, obj)) : null;
+
+
+
+/**
+ * This algorithm compensates for a javascripts non strict typing by comparing an object with 
+ * the type of a template object. This is more reliable to determine types.
+ * @param {any} obj Object you want to compare
+ * @param {any} template A template of the object that you want to compare the type of it to
+ * @param {function} toString function that gets the type string of an object/variable
+ * @return {boolean} Boolean value indicating whether the objects match types or not
+ */
+function typeOf(obj, template, toString = Object.prototype.toString) {
+    return (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template)) ? true : false;
+}
+let typeOf = (obj, template, toString = Object.prototype.toString) => (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template)) ? true : false;
