@@ -84,7 +84,7 @@ function safeGet(props, obj) {
     return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (obj[prop]) ? obj[prop] : null, obj)) : null;
 }
 //ES6 Goodness
-let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (obj[prop]) ? obj[prop] : null, obj)) : null;
+let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc[prop]) ? acc[prop] : null, obj)) : null;
 
 
 
@@ -100,3 +100,17 @@ function typeOf(obj, template, toString = Object.prototype.toString) {
     return (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template)) ? true : false;
 }
 let typeOf = (obj, template, toString = Object.prototype.toString) => (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template)) ? true : false;
+
+
+
+
+/**
+ * This is a function does a shallow comparison of two arrays,
+ * It is only limited to 1 level , hoping to modify it to accomodate lower levels
+ * I have to be createive to limit it to one line.. :D 
+ * @param {Array} arr1 First comparison array
+ * @param {Array} arr2 Second comparison array
+ * @param {boolean function} isArr  Function that checks if the objets are indeed arrays.
+ * @param {boolean} flag  returns true if the arrays are the same, returns fales if they are different
+ */
+let compArr = (arr1, arr2, isArr = (arr) => Object.prototype.toString.call(arr) === "[object Array]", flag = true) => (!arr1 || !arr2 || !isArr(arr1) || !isArr(arr2) || (arr1.length !== arr2.length)) ? false : (arr1.map((val, i) => (val !== arr2[i]) ? flag = false : null), flag);
