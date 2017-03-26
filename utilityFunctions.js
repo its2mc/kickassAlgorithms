@@ -103,7 +103,6 @@ let typeOf = (obj, template, toString = Object.prototype.toString) => (obj === u
 
 
 
-
 /**
  * This is a function does a shallow comparison of two arrays,
  * It is only limited to 1 level , hoping to modify it to accomodate lower levels
