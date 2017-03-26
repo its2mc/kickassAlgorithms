@@ -81,7 +81,7 @@ function uniqBy(arr, uniqField, res = arr.splice()) {
  * @return {any} The value of the property accessed is returned
  */
 function safeGet(props, obj) {
-    return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (obj[prop]) ? obj[prop] : null, obj)) : null;
+    return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc[prop]) ? acc[prop] : null, obj)) : null;
 }
 //ES6 Goodness
 let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc[prop]) ? acc[prop] : null, obj)) : null;
@@ -114,3 +114,14 @@ let typeOf = (obj, template, toString = Object.prototype.toString) => (obj === u
  * @param {boolean} flag  returns true if the arrays are the same, returns fales if they are different
  */
 let compArr = (arr1, arr2, isArr = (arr) => Object.prototype.toString.call(arr) === "[object Array]", flag = true) => (!arr1 || !arr2 || !isArr(arr1) || !isArr(arr2) || (arr1.length !== arr2.length)) ? false : (arr1.map((val, i) => (val !== arr2[i]) ? flag = false : null), flag);
+
+
+
+/**
+ * Performing a N^2 loop with one line.
+ * This loop performs a double loop with only one line, can save space by removing the necessity 
+ * of using a second for loop.
+ * The second loop loops loop2_len times while the first loop loops loop1_len times
+ */
+for (let i = 0, j = 0; i < loop1_len;
+    (j < loop2_len - 1) ? ++j : (j = 0, ++i)) console.log("hey");
