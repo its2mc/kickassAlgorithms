@@ -81,10 +81,10 @@ function uniqBy(arr, uniqField, res = arr.splice()) {
  * @return {any} The value of the property accessed is returned
  */
 function safeGet(props, obj) {
-    return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc[prop]) ? acc[prop] : null, obj)) : null;
+    return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc && acc[prop]) ? acc[prop] : null, obj)) : null;
 }
 //ES6 Goodness
-let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc[prop]) ? acc[prop] : null, obj)) : null;
+let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc && acc[prop]) ? acc[prop] : null, obj)) : null;
 
 
 
@@ -124,3 +124,16 @@ let compArr = (arr1, arr2, isArr = (arr) => Object.prototype.toString.call(arr) 
  */
 for (let i = 0, j = 0; i < loop1_len;
     (j < loop2_len - 1) ? ++j : (j = 0, ++i)) console.log("hey");
+
+
+
+/**
+ * Altorithm to search an object for a matched value. If it finds it it returns the value,
+ * if it does not find it it returns null.
+ * 
+ 
+let searchObj = (obj, key, toString = Object.prototype.toString, typeOf = (obj, tmp) => (toString.call(obj) === toString.call(tmp)) ? true : false) => {
+    return (obj === undefined || obj === null || key === undefined || key === null) ? false : ;
+};
+
+*/
