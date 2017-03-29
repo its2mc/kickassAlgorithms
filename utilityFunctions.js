@@ -122,8 +122,12 @@ let compArr = (arr1, arr2, isArr = (arr) => Object.prototype.toString.call(arr) 
  * of using a second for loop.
  * The second loop loops loop2_len times while the first loop loops loop1_len times
  */
+let loop1 = (i) => { console.log("masterloop " + i) };
+let loop2 = (i) => { console.log("second loop " + i) };
+let loop1_len = 6;
+let loop2_len = 2;
 for (let i = 0, j = 0; i < loop1_len;
-    (j < loop2_len - 1) ? ++j : (j = 0, ++i)) console.log("hey");
+    (j < loop2_len - 1) ? ++j : (j = 0, ++i))(j == 0) ? (loop1(i) || loop2(j)) : (loop2(j));
 
 
 
