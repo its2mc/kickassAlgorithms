@@ -81,7 +81,7 @@ function uniqBy(arr, uniqField, res = arr.splice()) {
  * @return {any} The value of the property accessed is returned
  */
 function safeGet(props, obj) {
-    return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc && acc[prop]) ? acc[prop] : null, obj)) : null;
+    return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (prop && acc && acc[prop]) ? acc[prop] : null, obj)) : null;
 }
 //ES6 Goodness
 let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (prop && acc && acc[prop]) ? acc[prop] : null, obj)) : null;
