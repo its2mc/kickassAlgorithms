@@ -165,10 +165,20 @@ let reverseWordSen = (str, b = new String(str)) => (b && b.length > 0) ? b.split
  * if it does not find it it returns null.
  * 
  
-let searchObj = (obj, key, toString = Object.prototype.toString, typeOf = (obj, tmp) => (toString.call(obj) === toString.call(tmp)) ? true : false) => {
+
+rule 1 keep map of keys
+rule 2 keep depth of array transversal
+rule 3 detect if value is object. if object trasnverse, if not ignore if yes give back result
+
+let 
+
+
+
+let searchObj = (obj, val, toString = Object.prototype.toString, typeOf = (obj, tmp) => (toString.call(obj) === toString.call(tmp)) ? true : false) => {
     return (obj === undefined || obj === null || key === undefined || key === null) ? false : ;
 };
 
+<<<<<<< HEAD
 */
 
 
@@ -197,3 +207,13 @@ let searchObj = (obj, key, toString = Object.prototype.toString, typeOf = (obj, 
  * if an object property has the corresponding value as given
  * return true, false, the path to the key
  */
+=======
+
+function searchObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp)) ? true : false, index = 0) {
+    if (typeOf(obj, {}))
+        for (let i = 0, dCount = 0, tmp = Object.keys(tmpObj); i < tmp.length; depth[dCount] = 1, map.push(tmp[i]), console.log(map), ++i) return searchObj(tmpObj[tmp[i]], val, map, depth, typeOf);
+    else if (typeOf(obj, []) && typeOf(val, [])) {} else if (obj == val) {} else return null;
+}
+
+*/
+>>>>>>> fa738a02663b12cab8d205de1d746ad9219468de
