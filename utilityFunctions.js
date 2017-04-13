@@ -178,11 +178,6 @@ let searchObj = (obj, val, toString = Object.prototype.toString, typeOf = (obj, 
     return (obj === undefined || obj === null || key === undefined || key === null) ? false : ;
 };
 
-<<<<<<< HEAD
-*/
-
-
-
 
 /**
  * sEARCH ObJECT for matching value
@@ -207,8 +202,8 @@ let searchObj = (obj, val, toString = Object.prototype.toString, typeOf = (obj, 
  * if an object property has the corresponding value as given
  * return true, false, the path to the key
  */
-=======
 
+/*
 function searchObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp)) ? true : false, index = 0) {
     if (typeOf(obj, {}))
         for (let i = 0, dCount = 0, tmp = Object.keys(tmpObj); i < tmp.length; depth[dCount] = 1, map.push(tmp[i]), console.log(map), ++i) return searchObj(tmpObj[tmp[i]], val, map, depth, typeOf);
@@ -216,4 +211,3 @@ function searchObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Objec
 }
 
 */
->>>>>>> fa738a02663b12cab8d205de1d746ad9219468de
