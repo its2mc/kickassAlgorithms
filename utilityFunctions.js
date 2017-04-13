@@ -84,7 +84,7 @@ function safeGet(props, obj) {
     return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc && acc[prop]) ? acc[prop] : null, obj)) : null;
 }
 //ES6 Goodness
-let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc && acc[prop]) ? acc[prop] : null, obj)) : null;
+let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (prop && acc && acc[prop]) ? acc[prop] : null, obj)) : null;
 
 
 
@@ -132,6 +132,35 @@ for (let i = 0, j = 0; i < loop1_len;
 
 
 /**
+ * Algorithm to reverese a string, this algorithm reverses the whole string, it can be easily
+ * modified to reverse word patterns instead.
+ */
+let _reverseStr = str => (str && str.length > 0) ? str.split("").reverse().join("") : "";
+let reverseStr = (str, b = new String(str)) => (str && str.length > 0) ? str.split("").reverse().join("") : "";
+
+
+
+
+/**
+ * Reverse words
+ */
+let _reverseWord = str => (str && str.length > 0) ? str.split(" ").reverse().join(" ") : "";
+let reverseWord = (str, b = new String(str)) => (b && b.length > 0) ? b.split(" ").reverse().join(" ") : "";
+
+
+
+
+/**
+ * Reverse words order but leave sentence order intact
+ */
+let _reverseWordSen = str => (str && str.length > 0) ? str.split(". ").map(s => s.replace(/\./g, "").split(" ").reverse().join(" ")).join(". ") + "." : "";
+let reverseWordSen = (str, b = new String(str)) => (b && b.length > 0) ? b.split(". ").map(s => s.replace(/\./g, "").split(" ").reverse().join(" ")).join(". ") + "." : "";
+
+
+
+
+/**
+ * 
  * Altorithm to search an object for a matched value. If it finds it it returns the value,
  * if it does not find it it returns null.
  * 
@@ -141,3 +170,30 @@ let searchObj = (obj, key, toString = Object.prototype.toString, typeOf = (obj, 
 };
 
 */
+
+
+
+
+/**
+ * sEARCH ObJECT for matching value
+ * if any property matches the value return the key path
+ */
+
+
+
+
+
+/**
+ * Search object for key,
+ * if a key exists in an object return key path and value.
+ */
+
+
+
+
+
+/**
+ * Search object for matching key and value'
+ * if an object property has the corresponding value as given
+ * return true, false, the path to the key
+ */
