@@ -164,50 +164,30 @@ let reverseWordSen = (str, b = new String(str)) => (b && b.length > 0) ? b.split
  * Altorithm to search an object for a matched value. If it finds it it returns the value,
  * if it does not find it it returns null.
  * 
- 
-
-rule 1 keep map of keys
-rule 2 keep depth of array transversal
-rule 3 detect if value is object. if object trasnverse, if not ignore if yes give back result
-
-let 
-
-
-
-let searchObj = (obj, val, toString = Object.prototype.toString, typeOf = (obj, tmp) => (toString.call(obj) === toString.call(tmp)) ? true : false) => {
-    return (obj === undefined || obj === null || key === undefined || key === null) ? false : ;
-};
-
-
-/**
- * sEARCH ObJECT for matching value
- * if any property matches the value return the key path
  */
-
-
-
-
-
-/**
- * Search object for key,
- * if a key exists in an object return key path and value.
- */
-
-
-
-
-
-/**
- * Search object for matching key and value'
- * if an object property has the corresponding value as given
- * return true, false, the path to the key
- */
-
-/*
-function searchObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp)) ? true : false, index = 0) {
-    if (typeOf(obj, {}))
-        for (let i = 0, dCount = 0, tmp = Object.keys(tmpObj); i < tmp.length; depth[dCount] = 1, map.push(tmp[i]), console.log(map), ++i) return searchObj(tmpObj[tmp[i]], val, map, depth, typeOf);
-    else if (typeOf(obj, []) && typeOf(val, [])) {} else if (obj == val) {} else return null;
+function findObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp)) ? true : false, keys = obj => (typeOf(obj, {})) ? Object.keys(obj) : [], index = 0) {
+    map = keys(obj);
+    if (map.length > 0) {
+        for (; index < map.length; index++) {
+            if (typeOf(obj[map[index]], {})) {
+                depth[depth.length] = map[index];
+                return searchObj(obj[map[index]], val, [], depth, typeOf, keys, 0);
+            } else if (typeOf(obj[map[index]], [])) {
+                for (let i = 0; i < obj[map[index]].length; ++i) {
+                    if (typeOf(obj[map[index]][i], {})) {
+                        depth[depth.length] = map[index];
+                        depth[depth.length] = i;
+                        return searchObj(obj[map[index]][i], val, [], depth, typeOf, keys, 0);
+                    } else if (obj[map[index]][i] == val) {
+                        depth[depth.length] = map[index];
+                        depth[depth.length] = i;
+                        return depth;
+                    }
+                }
+            } else if (obj[map[index]] === val) {
+                depth[depth.length] = map[index];
+                return depth;
+            }
+        }
+    }
 }
-
-*/
