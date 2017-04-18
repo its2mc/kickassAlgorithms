@@ -160,10 +160,13 @@ let reverseWordSen = (str, b = new String(str)) => (b && b.length > 0) ? b.split
 
 
 /**
- * 
- * Altorithm to search an object for a matched value. If it finds it it returns the value,
- * if it does not find it it returns null.
- * 
+ * find Object
+ * Altorithm to search an object for a matching value. 
+ * No type conversion is done in the matching, hence the type is maintained.
+ * It returns on the first instance of the object. Next function will search for all occurences of a value
+ * @param {Object} obj Javascript object to be searched.
+ * @param {any} val This is a string, boolean, number e.t.c that can be matched with the value.
+ * @return {Array} The path to the first value found in the object. If no result is found undefined is returned
  */
 function findObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp)) ? true : false, keys = obj => (typeOf(obj, {})) ? Object.keys(obj) : [], index = 0) {
     map = keys(obj);
@@ -171,14 +174,14 @@ function findObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Object.
         for (; index < map.length; index++) {
             if (typeOf(obj[map[index]], {})) {
                 depth[depth.length] = map[index];
-                return searchObj(obj[map[index]], val, [], depth, typeOf, keys, 0);
+                return findObj(obj[map[index]], val, [], depth, typeOf, keys, 0);
             } else if (typeOf(obj[map[index]], [])) {
                 for (let i = 0; i < obj[map[index]].length; ++i) {
                     if (typeOf(obj[map[index]][i], {})) {
                         depth[depth.length] = map[index];
                         depth[depth.length] = i;
-                        return searchObj(obj[map[index]][i], val, [], depth, typeOf, keys, 0);
-                    } else if (obj[map[index]][i] == val) {
+                        return findObj(obj[map[index]][i], val, [], depth, typeOf, keys, 0);
+                    } else if (obj[map[index]][i] === val) {
                         depth[depth.length] = map[index];
                         depth[depth.length] = i;
                         return depth;
