@@ -160,7 +160,7 @@ let reverseWordSen = (str, b = new String(str)) => (b && b.length > 0) ? b.split
 
 
 /**
- * find Object
+ * find value in Object
  * Altorithm to search an object for a matching value. 
  * No type conversion is done in the matching, hence the type is maintained.
  * It returns on the first instance of the object. Next function will search for all occurences of a value
