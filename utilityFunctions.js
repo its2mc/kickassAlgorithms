@@ -194,3 +194,13 @@ function findObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Object.
         }
     }
 }
+
+
+/**
+ * Find last index of, Use this to find the index of the last occurence of a given value in an array
+ * 
+ */
+function lastIndexOf(arr, val, i = 0, len = arr.length, ind = -1) {
+    while (i != len)((arr[i] === val) ? ind = i : null, ++i);
+    return ind;
+}
