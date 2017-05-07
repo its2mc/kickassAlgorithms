@@ -97,9 +97,9 @@ let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce
  * @return {boolean} Boolean value indicating whether the objects match types or not
  */
 function typeOf(obj, template, toString = Object.prototype.toString) {
-    return (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template)) || false;
+    return (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template) || false);
 }
-let typeOf = (obj, template, toString = Object.prototype.toString) => (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template)) || false;
+let typeOf = (obj, template, toString = Object.prototype.toString) => (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template) || false);
 
 
 
@@ -168,10 +168,12 @@ let reverseWordSen = (str, b = new String(str)) => (b && b.length > 0) ? b.split
  * @param {any} val This is a string, boolean, number e.t.c that can be matched with the value.
  * @return {Array} The path to the first value found in the object. If no result is found undefined is returned
  */
-function findObj(obj, val, map = [], depth = [], typeOf = (obj, tmp, flag) => (Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp) || (flag && Object.prototype.toString.call(obj).search(/object/ig) > -1)) || false, keys = obj => (typeOf(obj, {})) ? Object.keys(obj) : [], index = 0) {
+function findObj(obj, val, map = [], depth = [], typeOf = (obj, tmp, flag) => Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp) || (flag && Object.prototype.toString.call(obj).search(/object/ig) > -1) || false, keys = obj => (typeOf(obj, {})) ? Object.keys(obj) : [], index = 0) {
     map = keys(obj);
+    console.log(map);
     if (map.length > 0) {
         for (; index < map.length; index++) {
+
             if (typeOf(obj[map[index]], {}, true)) {
                 depth[depth.length] = map[index];
                 return findObj(obj[map[index]], val, [], depth, typeOf, keys, 0);
