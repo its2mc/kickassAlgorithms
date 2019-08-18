@@ -1,26 +1,27 @@
 class sPromise extends Promise {
 
     constructor(executor) {
+        super((resolve, reject) => {
+            return executor(resolve, reject);
+        })
 
         this._caseTag = [];
         this._caseFunc = [];
-
-        this._promise = super((resolve, reject) => {
-            return executor(resolve, reject);
-        });
+        this.onRejected = () => {};
+        this._switch = () => {};
 
     }
 
     case (_case, _cb) {
-        if (!!_case && typeof _case == "String") {
+        if (!!_case || _case === 0) {
             this._caseTag.push({ c: "==", case: _case });
             this._caseFunc.push(_cb);
         }
         return this;
     }
 
-    strictCase(_case, _c) {
-        if (!!_case && typeof _case == "String") {
+    strictCase(_case, _cb) {
+        if (!!_case || _case === 0) {
             this._caseTag.push({ c: "===", case: _case });
             this._caseFunc.push(_cb);
         }
@@ -28,48 +29,42 @@ class sPromise extends Promise {
     }
 
     //This function executes the case conditions
-    switch () {
-        try {
-            this._promise.then(comparator => {
-                if (this._caseTag.length) {
-                    this._switch = (this._caseFunc.filter((tag, index) => {
-                        switch (this.caseTag[index].c) {
+    switch (onFulfilled, onRejected) {
+        let scope = this;
+        this.then(comparator => {
+            try {
+                let _switch = () => {};
+
+                if (scope._caseTag.length !== 0) {
+                    _switch = (scope._caseFunc.filter((tag, index) => {
+                        switch (scope._caseTag[index].c) {
                             case "==":
-                                return this.caseTag[index].case == comparator;
+                                return scope._caseTag[index].case == comparator;
                             case "===":
-                                return this.caseTag[index].case === comparator;
+                                return scope._caseTag[index].case === comparator;
                         }
-                        let cond = tag.splice
-                    }))[0]; //Get the first function that fulfills the condition
-                } else {
-                    this._switch = () => {}; //If nothing matches then have an empty function
+                    }))[0] || (() => {}); //Get the first function that fulfills the condition
+
                 }
+                onFulfilled(_switch());
 
-                return this;
-            });
+            } catch (err) {
+                if (onRejected) onRejected(err);
+                else {
+                    scope.onRejected(err);
+                };
+            }
+        });
 
-        } catch (err) {
-            this.catch(err);
-        }
+        return this;
+    } catch (onRejected) {
+        this.onRejected = onRejected
+        return this;
     }
 
-    //No
-    catch (executor) {
-        this._promise.catch(executor);
-    }
+};
 
-    then(executor) {
-        try {
-            //If there is a function from the switch statement
-            if (this._switch)
-                executor(this._switch());
-            else
-                executor();
-        } catch (err) {
-            this.catch(err)
-        }
-    }
-}
+
 
 (new sPromise((resolve, reject) => {
     let time = setTimeout(() => {
@@ -88,14 +83,13 @@ strictCase('3', () => {
 case('3', () => {
     console.log("CORRECT result is =='3'");
 }).
-switch().
-then(res => {
+switch(res => {
     console.log(res); //Should be null
     console.log("Finished");
 }).
 catch(err => {
     console.log(err);
-})
+});
 
 
 (new sPromise((resolve, reject) => {
@@ -116,11 +110,10 @@ case('3', () => {
     console.log("CORRECT result is =='3'");
     return 324;
 }).
-switch().
-then(res => {
+switch(res => {
     console.log(res); //Should be 324
     console.log("Finished");
 }).
 catch(err => {
     console.log(err);
-})
+});
