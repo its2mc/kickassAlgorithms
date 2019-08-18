@@ -132,6 +132,18 @@ for (let i = 0, j = 0; i < loop1_len;
 
 
 /**
+ * Algorithm to convert integer to its binary representation in a string format.
+ * 
+ */
+let i2b = (no, s = "", check = (d)) => Number(no).toString().split().map(char => {
+    do {
+        s = (char & 1).toString() + s;
+        char >>>= 1;
+    } while (char > 0);
+    return s;
+}).join("");
+
+/**
  * Altorithm to search an object for a matched value. If it finds it it returns the value,
  * if it does not find it it returns null.
  * 
