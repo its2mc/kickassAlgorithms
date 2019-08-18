@@ -81,10 +81,10 @@ function uniqBy(arr, uniqField, res = arr.splice()) {
  * @return {any} The value of the property accessed is returned
  */
 function safeGet(props, obj) {
-    return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc && acc[prop]) ? acc[prop] : null, obj)) : null;
+    return (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (prop && acc && acc[prop]) ? acc[prop] : null, obj)) : null;
 }
 //ES6 Goodness
-let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (acc && acc[prop]) ? acc[prop] : null, obj)) : null;
+let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce((acc, prop) => (prop && acc && acc[prop]) ? acc[prop] : null, obj)) : null;
 
 
 
@@ -97,9 +97,9 @@ let safeGet = (props, obj) => (props && obj && props.length > 0) ? (props.reduce
  * @return {boolean} Boolean value indicating whether the objects match types or not
  */
 function typeOf(obj, template, toString = Object.prototype.toString) {
-    return (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template)) ? true : false;
+    return (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template) || false);
 }
-let typeOf = (obj, template, toString = Object.prototype.toString) => (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template)) ? true : false;
+let typeOf = (obj, template, toString = Object.prototype.toString) => (obj === undefined || obj === null || template === undefined || template === null) ? false : (toString.call(obj) === toString.call(template) || false);
 
 
 
@@ -132,6 +132,7 @@ for (let i = 0, j = 0; i < loop1_len;
 
 
 /**
+
  * Algorithm to convert integer to its binary representation in a string format.
  * 
  */
@@ -144,28 +145,76 @@ let i2b = (no, s = "", check = (d)) => Number(no).toString().split().map(char =>
 }).join("");
 
 /**
- * Altorithm to search an object for a matched value. If it finds it it returns the value,
- * if it does not find it it returns null.
- * 
- 
-
-rule 1 keep map of keys
-rule 2 keep depth of array transversal
-rule 3 detect if value is object. if object trasnverse, if not ignore if yes give back result
-
-let 
+ * Algorithm to reverese a string, this algorithm reverses the whole string, it can be easily
+ * modified to reverse word patterns instead.
+ */
+let _reverseStr = str => (str && str.length > 0) ? str.split("").reverse().join("") : "";
+let reverseStr = (str, b = new String(str)) => (str && str.length > 0) ? str.split("").reverse().join("") : "";
 
 
 
-let searchObj = (obj, val, toString = Object.prototype.toString, typeOf = (obj, tmp) => (toString.call(obj) === toString.call(tmp)) ? true : false) => {
-    return (obj === undefined || obj === null || key === undefined || key === null) ? false : ;
-};
 
 
-function searchObj(obj, val, map = [], depth = [], typeOf = (obj, tmp) => (Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp)) ? true : false, index = 0) {
-    if (typeOf(obj, {}))
-        for (let i = 0, dCount = 0, tmp = Object.keys(tmpObj); i < tmp.length; depth[dCount] = 1, map.push(tmp[i]), console.log(map), ++i) return searchObj(tmpObj[tmp[i]], val, map, depth, typeOf);
-    else if (typeOf(obj, []) && typeOf(val, [])) {} else if (obj == val) {} else return null;
+/**
+ * Reverse words
+ */
+let _reverseWord = str => (str && str.length > 0) ? str.split(" ").reverse().join(" ") : "";
+let reverseWord = (str, b = new String(str)) => (b && b.length > 0) ? b.split(" ").reverse().join(" ") : "";
+
+
+
+
+/**
+ * Reverse words order but leave sentence order intact
+ */
+let _reverseWordSen = str => (str && str.length > 0) ? str.split(". ").map(s => s.replace(/\./g, "").split(" ").reverse().join(" ")).join(". ") + "." : "";
+let reverseWordSen = (str, b = new String(str)) => (b && b.length > 0) ? b.split(". ").map(s => s.replace(/\./g, "").split(" ").reverse().join(" ")).join(". ") + "." : "";
+
+
+
+
+/**
+ * find value in Object
+ * Altorithm to search an object for a matching value. 
+ * No type conversion is done in the matching, hence the type is maintained.
+ * It returns on the first instance of the object. Next function will search for all occurences of a value
+ * @param {Object} obj Javascript object to be searched.
+ * @param {any} val This is a string, boolean, number e.t.c that can be matched with the value.
+ * @return {Array} The path to the first value found in the object. If no result is found undefined is returned
+ */
+function findObj(obj, val, map = [], depth = [], typeOf = (obj, tmp, flag) => Object.prototype.toString.call(obj) === Object.prototype.toString.call(tmp) || (flag && typeof obj === "object") || false, keys = obj => typeOf(obj, {}, true) ? Object.keys(obj) : [], index = 0) {
+    map = keys(obj);
+    if (map.length > 0) {
+        for (; index < map.length; index++) {
+            if (typeOf(obj[map[index]], {}, true)) {
+                depth[depth.length] = map[index];
+                return findObj(obj[map[index]], val, [], depth, typeOf, keys, 0);
+            } else if (typeOf(obj[map[index]], [])) {
+                for (let i = 0; i < obj[map[index]].length; ++i) {
+                    if (typeOf(obj[map[index]][i], {}, true)) {
+                        depth[depth.length] = map[index];
+                        depth[depth.length] = i;
+                        return findObj(obj[map[index]][i], val, [], depth, typeOf, keys, 0);
+                    } else if (obj[map[index]][i] === val) {
+                        depth[depth.length] = map[index];
+                        depth[depth.length] = i;
+                        return depth;
+                    }
+                }
+            } else if (obj[map[index]] === val) {
+                depth[depth.length] = map[index];
+                return depth;
+            }
+        }
+    }
 }
 
-*/
+
+/**
+ * Find last index of, Use this to find the index of the last occurence of a given value in an array
+ * 
+ */
+function lastIndexOf(arr, val, i = 0, len = arr.length, ind = -1) {
+    while (i != len)((arr[i] === val) ? ind = i : null, ++i);
+    return ind;
+}
